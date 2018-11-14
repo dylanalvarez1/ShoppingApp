@@ -43,13 +43,23 @@
         script.src= 'js/login.js';
         head.appendChild(script);
      }
+
+     function load_js_cart() {
+        var head= document.getElementsByTagName('head')[0];
+        var script= document.createElement('script');
+        script.src= 'js/cart.js';
+        head.appendChild(script);
+     }
      function showButtons() {
          console.log("show buttons")
          console.log("user", user);
          var buttons = document.getElementsByName("spanButtons");
+
+         //Default login form is visible first
          document.getElementById("register").style.display = "none"; 
          document.getElementById("login").style.display = "block"; 
 
+        //Make the radio buttons visible
          buttons.forEach(button => {
              button.style.display = "block";
          });
@@ -59,6 +69,7 @@
 
    
    load_js();
+
   
   </script>
 </html>

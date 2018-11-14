@@ -6,6 +6,7 @@
     if(user == null) {
         var errorMessage = document.createTextNode("Register or sign in in order to view your cart");
         var mainDiv = document.getElementById('main');
+        document.getElementById('showButton').style.display = "none";
         while (mainDiv.firstChild) {
          mainDiv.removeChild(mainDiv.firstChild);
          }
@@ -14,27 +15,7 @@
     }
     else {
 
-            getCart((items) => {
-                let i = 1;
-                var table = document.createElement("table"); 
-                table.classList.add('itemTable');
-                var header = table.createTHead();
-                var row = header.insertRow(0);
-                var cell = row.insertCell(0);
-                cell.innerHTML = "<b>Item</b>";
-                var cell2 = row.insertCell(1);
-                cell2.innerHTML = "<b>Description</b>";
-                console.log(items);
-                //Create table rows for every item in the item array
-                items.forEach(function(item){
-                    var row = table.insertRow(i++);
-                    var name = row.insertCell(0);
-                    var description = row.insertCell(1);
-                    name.innerHTML = item.name;
-                    description.innerHTML = item.shortDescription;
-                }); 
-                mainDiv.appendChild(table);
-            })
+            getCart();
 			
 
 			
@@ -44,18 +25,41 @@
    function getCart() {
     //Get the items in the cart
     let urlPost = "http://localhost:8081/store-2.0.3.RELEASE/store/carts?username=" + user;
-    var items;
+    
     console.log(urlPost);
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            items = xhttp.responseText;
-            console.log("items", items);
-            return items;
+            let items = JSON.parse(xhttp.responseText);
+            console.log("items", items)
+            var mainDiv = document.getElementById('main');
+            var table = document.createElement("table"); 
+            table.classList.add('itemTable');
+            var headerH = table.createTHead();
+            var rowH = headerH.insertRow(0);
+            var cellH = rowH.insertCell(0);
+            cellH.innerHTML = "<b>Item</b>";
+            var cellH2 = rowH.insertCell(1);
+            cellH2.innerHTML = "<b>Description</b>";
+            let i = 1;
+            items.forEach(item => {
+                let row = table.insertRow(i++);
+                let name = row.insertCell(0);
+                let description = row.insertCell(1);
+                name.innerHTML = item.name;
+                description.innerHTML = item.shortDescription;
+            });
+            
+          
+            while (mainDiv.hasChildNodes()) {
+				mainDiv.removeChild(mainDiv.firstChild);
+			}
+            mainDiv.appendChild(table);
         }
     };
 
     xhttp.open("GET", urlPost, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
    }
 

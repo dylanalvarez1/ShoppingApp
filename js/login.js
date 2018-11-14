@@ -1,15 +1,12 @@
 (function() {
     //If the user is signed in 
-    if(user != null)  {
-        signedIn();
-    }
-    //If the user isn't signed in
-    else {
-        notSignedIn();
-    }
-    
    
-
+        if(user != null) {
+            signedIn();
+        }
+        else {
+            notSignedIn();
+        }
    
      function notSignedIn() {
         //If the user is not signed in
@@ -44,6 +41,7 @@
         signoutButton.addEventListener("click", function() {
             console.log("submit form 3");
             signout();
+            notSignedIn();
         });
 
         //Add event listeners
@@ -75,13 +73,19 @@
             document.getElementById("loginform").style.display = "none"; 
             document.getElementById('radio1').style.display = "none";
             document.getElementById('radio2').style.display = "none";
-    
             document.getElementById("userprofile").style.display = "block";
+
+            document.getElementById('usernameProfile').innerHTML = user;
+            document.getElementById('fnameProfile').innerHTML = userFname;
+            document.getElementById('lnameProfile').innerHTML = userLname;
+            document.getElementById('emailProfile').innerHTML = userEmail;
+
             var signoutButton = document.getElementById("signout");
             signoutButton.style.display = "block";
             signoutButton.addEventListener("clicked", function() {
                 console.log("clicked signoutButton");
                 signout();
+                notSignedIn();
             }); 
 
 
