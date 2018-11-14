@@ -30,7 +30,8 @@
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let items = JSON.parse(xhttp.responseText);
+            let json = JSON.parse(xhttp.responseText);
+            let items = JSON.parse(xhttp.responseText).items;
             console.log("items", items)
             var mainDiv = document.getElementById('main');
             var table = document.createElement("table"); 
@@ -53,7 +54,28 @@
           
             while (mainDiv.hasChildNodes()) {
 				mainDiv.removeChild(mainDiv.firstChild);
-			}
+            }
+            
+            var buyCart = document.createElement("BUTTON");
+            buyCart.innerHTML = "Purchase Cart";
+            buyCart.addEventListener("click", function () {
+
+                //route: /carts/purchase/{cartId}
+                let urlPurchase = "http://localhost:8081/store-2.0.3.RELEASE/store/carts/purchase/" + json.cartId;
+                var xhttp = new XMLHttpRequest();
+
+                //When the request goes through (after hitting purchase button), remove the table
+                xhttp.onreadystatechange = function() {
+                    while (mainDiv.hasChildNodes()) {
+                        mainDiv.removeChild(mainDiv.firstChild);
+                    }
+                };
+            
+                xhttp.open("PUT", urlPurchase, true);
+                xhttp.setRequestHeader("Content-type", "application/json");
+                xhttp.send();
+            });
+            mainDiv.appendChild(buyCart);
             mainDiv.appendChild(table);
         }
     };
