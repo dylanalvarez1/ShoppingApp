@@ -175,3 +175,26 @@ li a {
 li a:hover {
     background-color: #111;
 }
+
+button {
+	display: inline-block;
+	padding: 6px 12px;
+	font-size: 12px;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	outline: none;
+	color: #fff;
+	background-color: blue;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0 2px rgb(13, 14, 19);
+  }
+  
+  button:hover {background-color: rgb(12, 34, 136)}
+  
+  button:active {
+
+	box-shadow: 0 4px rgb(13, 14, 19);
+	transform: translateY(4px);
+  }

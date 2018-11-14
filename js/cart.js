@@ -42,20 +42,30 @@
             cellH.innerHTML = "<b>Item</b>";
             var cellH2 = rowH.insertCell(1);
             cellH2.innerHTML = "<b>Description</b>";
+            var cellH3 = rowH.insertCell(2);
+            cellH3.innerHTML = "<b>Price</b>";
+
+            let totalPrice = 0;
             let i = 1;
             items.forEach(item => {
                 let row = table.insertRow(i++);
                 let name = row.insertCell(0);
                 let description = row.insertCell(1);
+                let price = row.insertCell(2);
                 name.innerHTML = item.name;
                 description.innerHTML = item.shortDescription;
+                price.innerHTML = item.salePrice;
+                totalPrice += item.salePrice;
             });
             
+          
           
             while (mainDiv.hasChildNodes()) {
 				mainDiv.removeChild(mainDiv.firstChild);
             }
             
+            updatePrice(totalPrice);
+
             var buyCart = document.createElement("BUTTON");
             buyCart.innerHTML = "Purchase Cart";
             buyCart.addEventListener("click", function () {
@@ -85,4 +95,17 @@
     xhttp.send();
    }
 
+   function updatePrice(price) {
+    console.log("in update price")
+    var mainDiv = document.getElementById('main');
+    var priceDiv = document.createElement("div");
+    priceDiv.style.textAlign = "right";
+    //console.log("Price div", priceDiv);
+    var afterTax =  document.createTextNode("Total: " + ((price * .08) + price));
+    var beforeTax = document.createTextNode("Subtotal: " + price);
+    priceDiv.append(beforeTax);
+    priceDiv.append(document.createElement("br"));
+    priceDiv.append(afterTax);
+    mainDiv.insertAdjacentElement('beforeend', priceDiv);
+   }
 })();
