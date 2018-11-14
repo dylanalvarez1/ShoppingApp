@@ -1,0 +1,48 @@
+<button id="showButton" onclick="load_js_login(); showButtons();">Click to Login or Register</button>
+<span name="spanButtons" id="radio1" style="display: none;"><input type="radio"  value="login" checked="checked" name="myRadios" > Login</span>
+<span name="spanButtons" id="radio2" style="display: none;"><input type="radio"  value="register" name="myRadios"> Register</span>
+<button id="signout" style="display: none;">Sign out</button>
+<div id='loginform' style="display: none;"> 
+<!--Log in form can be here, first check if the cookie holds the log in info, if it does, then no need to display 
+the login form. If the cookie has nothing in it, then make the user log in.-->
+    <div id="register" style="display: none;">
+        <h2>Register</h2>
+        <p>First Name:</p>
+        <input type="text" name="fname" id="fnameField1">
+        <p>Last Name:</p>
+        <input type="text" name="lname" id="lnameField1">
+        <p>Username:</p>
+        <input type="text" name="username" id="userField1">
+        <p>Email:</p>
+        <input type="text" name="email" id="emailField1"><br>
+        <button name="submitButtons" id="validateForm">Sign in</button>
+    </div>
+    <div id="login" style="display: none;">
+        <h2>Login</h2>
+        <p>Username:</p>
+        <input type="text" name="username2" id="userField2"><br>
+        <button name="submitButtons" id="validateForm2">Login</button>
+    </div>
+</div> 
+<div id="userprofile" style="display: none; text-align: center">
+    <h2 id="usernameProfile"></h4>
+    <p id="fnameProfile"></p>
+    <p id="lnameProfile"></p>
+    <p id="emailProfile"></p>
+    <hr>
+    <div id="updateInfo">
+        <h2>Update Info</h2>
+        <p>Username:</p>
+        <input type="text" id="updateUsername">
+        <p>Email:</p>
+        <input type="text" id="updateEmail"><br>
+        <button id="validateForm3">Update Info</button>
+    </div><br><hr>
+    <table id="purchaseTable"> <h5>Purchase History: </h5>
+        <tr>
+            <th>Item</th>
+            <th>Description</th>
+            <th>Price</th>
+        </tr>
+    </table>
+</div>   

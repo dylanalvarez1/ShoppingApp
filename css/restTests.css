@@ -1,0 +1,34 @@
+h2 {
+	text-align: center;
+}
+table {
+    border-collapse: collapse;
+	width: 95%;
+}
+
+#testResultsTable th{
+	background-color: #CCCCCC;	
+}
+
+
+#testResultsTable th,
+#testResultsTable td{
+	border-right: 5px solid white;
+}
+
+
+#testResultsTable tr:nth-child(even) {
+	background-color: #F2F2F2;
+}
+
+
+#testResultsTable tr:hover {
+	background-color: #FFFFE0;
+}
+
+/**
+https://www.w3schools.com/css/css3_borders.asp
+**/
+.roundedCorners{
+	border-radius: 5px;
+}

@@ -1,0 +1,153 @@
+body {
+	background-color: #FBFBFB;
+	margin: 0px;
+	font-family: Verdana;	
+}
+
+h1 {
+	text-align: center;
+}
+
+input {
+	display: inline-block;
+}
+
+#banner{
+	
+	background-position: right top;
+	background-size: contain;
+	height: 75px;
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+#itemList {
+	text-align: center;
+}
+
+#purchaseTable {
+	text-align: center;
+	width: 100%;
+}
+
+.displayItem {
+	
+}
+
+#loginform {
+	padding-top: 10%;
+	padding-bottom: 10%;
+	text-align: center;
+	border-radius: 2px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: black;
+	margin: 50px;
+	background-color: lightskyblue;
+}
+
+input[type=text] {
+    width: 75%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+input[type=text]:focus {
+    border: 3px solid #555;
+}
+
+#itemDetails{
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #DDDDDD;
+	text-align: center;
+}
+
+.itemTileDiv,
+.itemTileDiv2 {
+	border: 1px solid #FFD084;
+	background-color: #FEFEFE;
+	margin: 3px;
+	display: inline-block;
+	text-align: center;
+}
+
+.itemTileDiv{
+	width: 25%;
+	height: 25%;
+}
+
+.itemTileDiv2{
+	width: 10%;
+	height: 10%;
+	font-size: 0.8em;
+}
+
+
+.itemTileDiv:hover {
+	box-shadow: 2px 2px 1px grey;
+	
+}
+
+.itemIcon {
+	border-radius: 12px;
+	width: 24px;
+	height: 24px;
+	background-color: black;
+    background-image: radial-gradient(black, white, black);
+	color: #FFFFFF;
+	position:relative;
+	margin: 15px auto; /**setting left and right margin to auto will center the div**/
+}
+
+.itemTable {
+	width: 100%;
+	
+}
+
+tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+tr:hover {
+	background-color: #f5f5f5;
+}
+
+td {
+	height: 50px;
+    vertical-align: bottom;
+}
+
+th {
+	height: 50px;
+}
+
+th, td {
+	border-bottom: 1px solid #ddd;
+	padding: 15px;
+	text-align: left;
+	
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
