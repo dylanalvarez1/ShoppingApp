@@ -4,7 +4,7 @@
 
    function setupView() {
     if(user == null) {
-        var errorMessage = document.createTextNode("Register or sign in in order to view your cart");
+        var errorMessage = document.createTextNode("Register or sign in to view your cart");
         var mainDiv = document.getElementById('main');
         document.getElementById('showButton').style.display = "none";
         while (mainDiv.firstChild) {
@@ -87,6 +87,16 @@
             });
             mainDiv.appendChild(buyCart);
             mainDiv.appendChild(table);
+        }
+        else if(this.readyState == 4 && this.status == 500) {
+            
+            var errorMessage = document.createTextNode("Make sure your cart has some items in it before you try and purchase it!");
+            var mainDiv = document.getElementById('main');
+            document.getElementById('showButton').style.display = "none";
+            while (mainDiv.firstChild) {
+            mainDiv.removeChild(mainDiv.firstChild);
+            }
+            mainDiv.append(errorMessage);
         }
     };
 
