@@ -83,12 +83,16 @@
 		itemDiv.classList.add("displayItem");
 
 		//Item info
-		var itemArray = [5];
-		itemArray[0] = ("Item name: " + item.name);
-		itemArray[1] = ("Item brand: " + item.brandName);
-		itemArray[2] = ("Item price: " + item.salePrice);
-		itemArray[3] = ("Item size: " + item.size);
-		itemArray[4] = ("Item color: " + item.color);
+		var itemArray = [9];
+		itemArray[0] = ("Item id: " + item.id);
+		itemArray[1] = ("Item name: " + item.name);
+		itemArray[2] = ("Item brand: " + item.brandName);
+		itemArray[3] = ("Item price: " + item.salePrice);
+		itemArray[4] = ("Item size: " + item.size);
+		itemArray[5] = ("Item color: " + item.color);
+		itemArray[6] = ("Item upc: " + item.upc);
+		itemArray[7] = ("Item msrp: " + item.msrp);
+		itemArray[8] = ("Item gender: " + item.gender);
 
 		//Display item information
 
