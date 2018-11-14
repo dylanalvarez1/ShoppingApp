@@ -89,16 +89,40 @@ input[type=text]:focus {
 	
 }
 
-.itemIcon {
+.itemIcon, .bootIcon, .sweaterIcon, .shirtIcon, .pantsIcon, .sandalIcon, .shortsIcon {
 	border-radius: 12px;
-	width: 24px;
-	height: 24px;
-	background-color: black;
-    background-image: radial-gradient(black, white, black);
+	width: 150px;
+	height: 150px;
 	color: #FFFFFF;
 	position:relative;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover; 
 	margin: 15px auto; /**setting left and right margin to auto will center the div**/
 }
+
+.bootIcon {
+	background-image: url("images/boot.png");
+}
+.sweaterIcon {
+	background-image: url("images/sweater.png");
+}
+.shirtIcon {
+	background-image: url("images/shirt.png");
+}
+.pantsIcon {
+	background-image: url("images/pants.png");
+}
+.shortsIcon {
+	background-image: url("images/shorts.png");
+}
+.sandalIcon {
+	background-image: url("images/sandal.png");
+}
+
+
+
+
 
 .itemTable {
 	width: 100%;

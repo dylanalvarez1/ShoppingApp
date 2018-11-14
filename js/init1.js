@@ -22,7 +22,7 @@
 				/**Define the item "tile" **/	
 				//console.log("debug:", item.name);	
 				//console.log("debug item:", item);
-				var tileNode = createTileNode(item.shortDescription, "item");
+				var tileNode = createTileNode(item.shortDescription, "item", item);
 				tileNode.addEventListener("click", function(){
 							setupDetailView(this, item.id);
 							});
@@ -146,11 +146,12 @@
 		
 	}
 	
-	var createTileNode = function(title, classType){
+	var createTileNode = function(title, classType, item){
+		let itemClass = item.name.split(" ");
 		var tileNode = document.createElement("div");
 		var titleNode = document.createTextNode(title);
 		var itemNode = document.createElement("div");
-		itemNode.className = classType+"Icon";
+		itemNode.className = itemClass[1]+"Icon";
 		tileNode.className = classType+"TileDiv";
 		tileNode.appendChild(itemNode);
 		tileNode.appendChild(titleNode);
