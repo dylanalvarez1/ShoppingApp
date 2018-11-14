@@ -128,14 +128,6 @@
 			xhttp.send();
 			}
 
-			/* var formDiv = document.getElementById("itemDetails");
-			var formContainer = document.createElement("div");
-			var form = document.createElement("FORM");
-			var nameField = document.createElement("INPUT");
-			nameField.setAttribute("type", "text");
-			form.appendChild(nameField);
-			formContainer.appendChild(form);
-			formDiv.insertAdjacentElement('beforeend', formContainer); */
 
 		});
 		var text = document.createTextNode("Add to cart");
