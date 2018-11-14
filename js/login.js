@@ -24,25 +24,25 @@
         var button2 = document.getElementById('validateForm2');
         var button3 = document.getElementById('validateForm3');
 
-        button1.addEventListener("click", function() {
-            console.log("submit form 1");
-            validateForm();
-        });
-        button2.addEventListener("click", function() {
-            console.log("submit form 2");
-            validateForm2();
-        });
+        
 
-        button3.addEventListener("click", function() {
-            console.log("submit form 3");
-            validateForm3();
-        });
+        if(addedSigninListener) {
+            button1.addEventListener("click", function() {
+                console.log("submit form 1");
+                validateForm();
+            });
+            button2.addEventListener("click", function() {
+                console.log("submit form 2");
+                validateForm2();
+            });
+    
+            button3.addEventListener("click", function() {
+                console.log("submit form 3");
+                validateForm3();
+            });
 
-        signoutButton.addEventListener("click", function() {
-            console.log("submit form 3");
-            signout();
-            notSignedIn();
-        });
+            addedSigninListener = false;
+        }    
 
         //Add event listeners
         apiRadioButtons.forEach(function(button){
@@ -70,6 +70,8 @@
      function signedIn() {
         if(user != null) 
         {
+            var table = document.getElementById("purchaseTable");
+
             document.getElementById("loginform").style.display = "none"; 
             document.getElementById('radio1').style.display = "none";
             document.getElementById('radio2').style.display = "none";
@@ -82,28 +84,66 @@
 
             var signoutButton = document.getElementById("signout");
             signoutButton.style.display = "block";
+
+            
             signoutButton.addEventListener("clicked", function() {
                 console.log("clicked signoutButton");
                 signout();
-                notSignedIn();
             }); 
 
+            /* foreach(product p in getAllProducts())
+            {
+                foreach(user in getUsersWhoBoughtProduct(p))
+                { 
+                    if(user == cookie.user) { // display on view}
+                } 
+            }  */
 
+            
+            //Update the purchase history, so first get all items
+            //Then for each item, get Users who bought product, and if they bought it, add item to table
             var purchasedItems;
-    
-            //Update the purchase history, so first get item array from carts
-            let urlPost = 'http://localhost:8081/store-2.0.3.RELEASE/' +"store/carts/" + user;
-            console.log(urlPost);
+            let urlGetItems = 'http://localhost:8081/store-2.0.3.RELEASE/store/items/';
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     let purchaseTable = document.getElementById('purchaseTable');
-                    purchasedItems = xhttp.responseText;
-                    console.log("purchasedItems", purchasedItems);
+                    purchasedItems = JSON.parse(xhttp.responseText);
+                   // console.log("purchasedItems:", purchasedItems);
+                    purchasedItems.forEach(item => {
+                        //console.log("item:", item);
+                        let tempUrl = 'http://localhost:8081/store-2.0.3.RELEASE/store/carts/products?productId=' + item.id;
+                        //console.log("tempUrl:", tempUrl);
+                        let xhttp4 = new XMLHttpRequest();
+                        xhttp4.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                let response = JSON.parse(xhttp4.responseText);
+                                //console.log("response:", response);
+                                let i=1;
+                                response.forEach(userWhoBoughtItem => {
+
+                                    //Add item to the list
+                                    if(userWhoBoughtItem.username == user) {
+                                        var row = table.insertRow(i++);
+                                        var name = row.insertCell(0);
+                                        var description = row.insertCell(1);
+                                        var price = row.insertCell(2);
+                                        name.innerHTML = item.name;
+                                        description.innerHTML = item.shortDescription;
+                                        price.innerHTML = item.salePrice;
+
+                                    }
+                                });
+                            }
+                        }
+                        xhttp4.open("GET", tempUrl, true);
+                        xhttp4.send();
+                    });
+
                 }
             };
     
-        xhttp.open("GET", urlPost, true);
+        xhttp.open("GET", urlGetItems, true);
         xhttp.send();
     
     
@@ -117,7 +157,6 @@
         var userLname = null;
         var userEmail = null;
         notSignedIn();
-        location.reload(); 
     }
   
 
@@ -125,27 +164,27 @@
         console.log("in validate")
         
         var w = document.getElementById("fnameField1").value;
-        console.log("fname1:", w);
+        //console.log("fname1:", w);
         if (w ==  "" || w == undefined) {
             alert("fname must be filled out");
             return false;
         }
 
         var z = document.getElementById("lnameField1").value;
-        console.log("lname1:", z);
+        //console.log("lname1:", z);
         if (z ==  "" || z == undefined) {
             alert("username must be filled out");
             return false;
         }
 
         var x = document.getElementById("userField1").value;
-        console.log("username1:", x);
+       // console.log("username1:", x);
         if (x ==  "" || x == undefined) {
             alert("username must be filled out");
             return false;
         }
         var y = document.getElementById("emailField1").value;
-        console.log("email1:", y);
+        //console.log("email1:", y);
         if (y == "" || y == undefined) {
             alert("email must be filled out");
             return false;
@@ -163,29 +202,41 @@
         userObject.username = x;
         userObject.email = y;
 
-        let urlPost = 'http://localhost:8081/store-2.0.3.RELEASE/' +"store/customers?" + "fname=" + userObject.fname + "&lname=" + userObject.lname + "&username=" + userObject.username + "&email=" + userObject.email;
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && (this.status == 201) || (this.status == 200)){
-                user = userObject.username;
-                userFname = userObject.fname;
-                userLname = userObject.lname;
-                userEmail = userObject.email;
-                console.log("user:", user);
-                signedIn();
-                alert("Congrats " + user + ", you have successfully created an account!");
-                
-            }
-        };
-
-	xhttp.open("POST", urlPost, true);
-    xhttp.send();
+        let once = true;
+        if(once) {
+            let urlPost = 'http://localhost:8081/store-2.0.3.RELEASE/' +"store/customers?" + "fname=" + userObject.fname + "&lname=" + userObject.lname + "&username=" + userObject.username + "&email=" + userObject.email;
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && (this.status == 201) || (this.status == 200)) {
+                    once = false;
+                    user = userObject.username;
+                    userFname = userObject.fname;
+                    userLname = userObject.lname;
+                    userEmail = userObject.email;
+    
+                    //console.log("user:", user);
+                    signedIn();
+                    alert("Congrats " + user + ", you have successfully created an account!");
+                    
+                    document.getElementById("emailField1").value = "";
+                    document.getElementById("fnameField1").value = "";
+                    document.getElementById("lnameField1").value = "";
+                    document.getElementById("userField1").value = "";
+    
+                    
+                }
+            };
+    
+        xhttp.open("POST", urlPost, true);
+        xhttp.send();
+        }
+       
     
     }
 
     function validateForm2() {
         var w = document.getElementById("userField2").value;
-        console.log("username2:", w);
+        //console.log("username2:", w);
         if (w == "" || w == undefined) {
             alert("username must be filled out");
             return false;
@@ -193,49 +244,54 @@
         
         let dc = new DataController(true);
 
-        dc.getUserByUsername(w, function(data) {
-            //use the response data to set the cookies values to whatever the user that is returned
-            //If none is returned, make another request to create a user
-            console.log(data);
-            user = data.username;
-            userFname = data.fname;
-            userLname = data.lname;
-            userEmail = data.email;
-            console.log("userFname", userFname);
-            console.log("userLname", userLname);
-            console.log("userEmail", userEmail);
-            document.cookie = "username="+data.username;
-            console.log("user", user);
-            console.log("cookie", document.cookie);
-            //Change view to sign in
-            signedIn();
-            alert("Hi " + user + ", thanks for logging on!");
-            
-           
-        }).then(() => {
-            if(user == null) {
-            alert('User does not exist!');
-            }
-        });
+        let once = true;
+        if(once) {
+            dc.getUserByUsername(w, function(data) {
+                //use the response data to set the cookies values to whatever the user that is returned
+                //If none is returned, make another request to create a user
+                once = false;
+               // console.log(data);
+                user = data.username;
+                userFname = data.fname;
+                userLname = data.lname;
+                userEmail = data.email;
+                /* console.log("userFname", userFname);
+                console.log("userLname", userLname);
+                console.log("userEmail", userEmail); */
+                document.cookie = "username="+data.username;
+                //console.log("user", user);
+                console.log("cookie", document.cookie);
+                //Change view to sign in
+                signedIn();
+                alert("Hi " + user + ", thanks for logging on!");
+                
+               
+            }).then(() => {
+                if(user == null) {
+                alert('User does not exist!');
+                }
+            });
+        }
+       
     } 
 
     function validateForm3() {
         var w = document.getElementById("updateFname").value;
-        console.log("fname:", w);
+        //console.log("fname:", w);
         if (w ==  "" || w == undefined) {
             alert("fname must be filled out");
             return false;
         }
 
         var z = document.getElementById("updateLname").value;
-        console.log("lname:", z);
+        //console.log("lname:", z);
         if (z ==  "" || z == undefined) {
             alert("username must be filled out");
             return false;
         }
 
         var y = document.getElementById("updateEmail").value;
-        console.log("email:", y);
+        //console.log("email:", y);
         if (y == "" || y == undefined) {
             alert("email must be filled out");
             return false;
@@ -251,9 +307,8 @@
         userObject.fname = w;
         userObject.lname = z;
         userObject.email = y;
-      //============================================================================================================================
-      //TODO CURRENTLY BUSTED AS LOGICALLY WE CANT UPDATE USERNAME DUE TO HOW THE API IS SET UP
-      //============================================================================================================================
+      
+        //Update user fields
         let urlPut = 'http://localhost:8081/store-2.0.3.RELEASE/' +"store/customers?" + "fname=" 
         + userObject.fname + "&lname=" 
         + userObject.lname + "&username=" + user + "&email=" + userObject.email;

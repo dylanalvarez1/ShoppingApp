@@ -28,6 +28,8 @@
     var userFname = null;
     var userLname = null;
     var userEmail = null;
+    addedSignoutListener = true;
+    addedSigninListener = true;
     function load_js()
    {
 
@@ -41,6 +43,7 @@
         var head= document.getElementsByTagName('head')[0];
         var script= document.createElement('script');
         script.src= 'js/login.js';
+        script.id = 'loginScript';
         head.appendChild(script);
      }
 
@@ -48,11 +51,14 @@
         var head= document.getElementsByTagName('head')[0];
         var script= document.createElement('script');
         script.src= 'js/cart.js';
+        script.id = 'cartScript';
         head.appendChild(script);
      }
      function showButtons() {
          console.log("show buttons")
          console.log("user", user);
+         addedSignoutListener = true;
+         addedSigninListener = true;
          var buttons = document.getElementsByName("spanButtons");
 
          //Default login form is visible first
@@ -65,7 +71,19 @@
          });
          document.getElementById('showButton').style.display = "none";
          document.getElementById('loginform').style.display = "block";
+        var signoutButton = document.getElementById('signout');
+        signoutButton.addEventListener("click", () => signout());
      }
+
+     function signout () {
+        console.log("in signout of index");
+        user = null;
+        var userFname = null;
+        var userLname = null;
+        var userEmail = null;
+        location.reload();
+       
+    }
 
    
    load_js();
