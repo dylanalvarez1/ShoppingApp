@@ -84,17 +84,17 @@
 
 		//Item info
 		var itemArray = [5];
-		itemArray[0] = document.createTextNode("Item name: " + item.name);
-		itemArray[1] = document.createTextNode("Item brand: " + item.brandName);
-		itemArray[2] = document.createTextNode("Item price: " + item.salePrice);
-		itemArray[3] = document.createTextNode("Item size: " + item.size);
-		itemArray[4] = document.createTextNode("Item color: " + item.color);
+		itemArray[0] = ("Item name: " + item.name);
+		itemArray[1] = ("Item brand: " + item.brandName);
+		itemArray[2] = ("Item price: " + item.salePrice);
+		itemArray[3] = ("Item size: " + item.size);
+		itemArray[4] = ("Item color: " + item.color);
 
 		//Display item information
 
 		for(let j = 0; j < itemArray.length; j++) {
 			let div = document.createElement('div');
-			div.appendChild(itemArray[j]);
+			div.innerHTML = itemArray[j];
 			console.log("div", div);
 			itemDiv.appendChild(div);
 		}
@@ -106,15 +106,36 @@
 		var br = document.createElement('br');
 
 		button.addEventListener("click", function () {
-			//Make a form that will send the item id to add item to users cart (user selected by form)
-			var formDiv = document.getElementById("itemDetails");
+			//if signed in, it will add to cart, if not, it will display a message to sign in
+			if(user == null) {
+				itemDiv.innerHTML = "Please sign in if you want to add items to your cart to purchase them later"
+			}
+			else {
+				let urlPut =  'http://localhost:8081/store-2.0.3.RELEASE/' +"store/carts?" + "productId=" + item.id + "&username=" + user;
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && (this.status == 200 || this.status == 201)) {
+						//send an alert, clear the form
+						alert("User " + user + " added " + item.name + " to their cart!");
+						
+		
+					}
+				};
+		
+			xhttp.open("POST", urlPut, true);
+			//xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send();
+			}
+
+			/* var formDiv = document.getElementById("itemDetails");
 			var formContainer = document.createElement("div");
 			var form = document.createElement("FORM");
 			var nameField = document.createElement("INPUT");
 			nameField.setAttribute("type", "text");
 			form.appendChild(nameField);
 			formContainer.appendChild(form);
-			formDiv.insertAdjacentElement('beforeend', formContainer);
+			formDiv.insertAdjacentElement('beforeend', formContainer); */
+
 		});
 		var text = document.createTextNode("Add to cart");
 
