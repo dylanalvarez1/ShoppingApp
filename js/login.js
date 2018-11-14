@@ -75,10 +75,10 @@
             document.getElementById('radio2').style.display = "none";
             document.getElementById("userprofile").style.display = "block";
 
-            document.getElementById('usernameProfile').innerHTML = user;
-            document.getElementById('fnameProfile').innerHTML = userFname;
-            document.getElementById('lnameProfile').innerHTML = userLname;
-            document.getElementById('emailProfile').innerHTML = userEmail;
+            document.getElementById('usernameProfile').innerHTML = "Username: " + user;
+            document.getElementById('fnameProfile').innerHTML = "First Name: " + userFname;
+            document.getElementById('lnameProfile').innerHTML = "Last Name: " + userLname;
+            document.getElementById('emailProfile').innerHTML = "Email: " + userEmail;
 
             var signoutButton = document.getElementById("signout");
             signoutButton.style.display = "block";
@@ -220,26 +220,43 @@
     } 
 
     function validateForm3() {
-        var w = document.getElementById("updateUsername").value;
-       
-        if (w == "" || w == undefined) {
+        var w = document.getElementById("updateFname").value;
+        console.log("fname:", w);
+        if (w ==  "" || w == undefined) {
+            alert("fname must be filled out");
+            return false;
+        }
+
+        var z = document.getElementById("updateLname").value;
+        console.log("lname:", z);
+        if (z ==  "" || z == undefined) {
             alert("username must be filled out");
             return false;
         }
 
-        var x = document.getElementById("updateEmail").value;
-        
-        if (x == "" || x == undefined) {
+        var y = document.getElementById("updateEmail").value;
+        console.log("email:", y);
+        if (y == "" || y == undefined) {
             alert("email must be filled out");
             return false;
         }
-        console.log("userFname", userFname);
+
+        let userObject = {
+            fname: null,
+            lname: null,
+            username: null,
+            email: null
+            }
+
+        userObject.fname = w;
+        userObject.lname = z;
+        userObject.email = y;
       //============================================================================================================================
       //TODO CURRENTLY BUSTED AS LOGICALLY WE CANT UPDATE USERNAME DUE TO HOW THE API IS SET UP
       //============================================================================================================================
         let urlPut = 'http://localhost:8081/store-2.0.3.RELEASE/' +"store/customers?" + "fname=" 
-        + userFname + "&lname=" 
-        + userLname + "&username=" + user + "&email=" + x;
+        + userObject.fname + "&lname=" 
+        + userObject.lname + "&username=" + user + "&email=" + userObject.email;
 
         var xhttp3 = new XMLHttpRequest();
         xhttp3.onreadystatechange = function() {
@@ -247,7 +264,12 @@
                 //send an alert, clear the form
                 alert("User " + user + " updated successfully!");
                 document.getElementById("updateEmail").value = "";
-                document.getElementById("updateUsername").value = "";
+                document.getElementById("updateFname").value = "";
+                document.getElementById("updateLname").value = "";
+
+                document.getElementById("emailProfile").innerHTML = "Email: " + userObject.email;
+                document.getElementById("fnameProfile").innerHTML = "First Name: " + userObject.fname;
+                document.getElementById("lnameProfile").innerHTML = "Last Name: " + userObject.lname;
 
             }
         };
