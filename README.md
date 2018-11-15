@@ -1,6 +1,3 @@
-# vanilla-spa
-A simple implementation of a SPA with plain Js.
-
-For more info go to:
-
-[Js: Vanilla script SPA](https://medium.com/frontend-fun/js-vanilla-script-spa-1b29b43ea475)
+# Project 2 for web apps
+-Created by: Dylan Alvarez
+- Using own api included as a WAR file to be deployed on Apache Tomcat 9
