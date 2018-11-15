@@ -76,9 +76,11 @@
 
                 //When the request goes through (after hitting purchase button), remove the table
                 xhttp.onreadystatechange = function() {
+                    var errorMessage = document.createTextNode("You successfully purchased the cart!");
                     while (mainDiv.hasChildNodes()) {
                         mainDiv.removeChild(mainDiv.firstChild);
                     }
+                    mainDiv.append(errorMessage); 
                 };
             
                 xhttp.open("PUT", urlPurchase, true);
