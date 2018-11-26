@@ -4,6 +4,7 @@
   "description": "A store interface for a MySQL database",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dylan Alvarez",
