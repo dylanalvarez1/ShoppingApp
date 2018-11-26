@@ -3,13 +3,13 @@ function DataController(isLocal){
 	this.isLocalApi = isLocal;
 	this.baseUrl = null;
 	this.setBaseUrl();
-	this.lastFmApiKey = "a8b2ef565a557676faf34944fc62e9b9"; /**If you would like to use Last FM API, you will need to register for a developer account and get an API key**/
+	this.lastFmApiKey = "smz7vjqbgccrek7sh7e2bu74"; /**If you would like to use Last FM API, you will need to register for a developer account and get an API key**/
 }
 DataController.prototype.setBaseUrl = function(){
 	if(this.isLocalApi)
 		this.baseUrl = 'http://localhost:8081/store-2.0.3.RELEASE/';
 	else
-		this.baseUrl = "http://ws.audioscrobbler.com/2.0/";
+		this.baseUrl = "http://api.walmartlabs.com/v1/";
 
 }
 
