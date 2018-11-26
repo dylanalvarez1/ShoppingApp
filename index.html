@@ -210,15 +210,20 @@
           if (value === "tile") {
             //use tile view
             console.log("Tile fill!");
-            //reloadPage();
-            //makeRequest(populateItemListTile);
+            let data1 = jsonp(url);
+            data1.then((res) => {
+              console.log("res", res);
+              populateItemListTile(res.items);
+            });
 
           }
           else { // use table view
             //dc.isLocalApi = false;
             console.log("Table fill!");
-            //reloadPage();
-            //makeRequest(populateItemListTable);
+            let data1 = jsonp(url);
+            data1.then((res) => {
+              populateItemListTable(res.items);
+            });
           }
           
           
@@ -236,6 +241,9 @@
         }
         
       }
+
+     
+
 
       var data = jsonp(url);
       data.then((res) => {
