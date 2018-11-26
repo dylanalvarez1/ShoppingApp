@@ -1,0 +1,15 @@
+{
+  "name": "store",
+  "version": "1.0.0",
+  "description": "A store interface for a MySQL database",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dylan Alvarez",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "path": "^0.12.7"
+  }
+}
