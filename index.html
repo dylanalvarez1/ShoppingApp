@@ -92,7 +92,7 @@
 
       let apiKey = "smz7vjqbgccrek7sh7e2bu74";
 
-      let urlBase = "http://api.walmartlabs.com/v1/search?query=";
+      let urlBase = "https://api.walmartlabs.com/v1/search?query=";
 
       let url = urlBase + form.childNodes[1].value + "&format=json&apiKey=" + apiKey;
       console.log("url", url);
@@ -193,14 +193,14 @@
             //use tile view
             console.log("Tile fill!");
             //reloadPage();
-            dc.getAllItems(populateItemListTile);
+            makeRequest(populateItemListTile);
 
           }
           else { // use table view
             //dc.isLocalApi = false;
             console.log("Table fill!");
             //reloadPage();
-            dc.getAllItems(populateItemListTable);
+            makeRequest(populateItemListTable);
           }
           
           
@@ -219,24 +219,28 @@
         
       }
 
+      var makeRequest = function(url, callBackFunction) {
+        console.log("Making request");
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            //console.log("txt",this.responseText);
+            var jsonData = JSON.parse(this.responseText);
+            if(callBackFunction != null){
+              console.log("jsonData", jsonData.items);
+              callBackFunction(jsonData.items);
+            } 
+          }
+        };
+    
+        xhttp.open("GET", url, true);
+        xhttp.setRequestHeader('Access-Control-Allow-Headers', '*');
+        xhttp.setRequestHeader('Content-type', 'application/ecmascript');
+        xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
+        xhttp.send();
+      }
 
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          //console.log("txt",this.responseText);
-          var jsonData = JSON.parse(this.responseText);
-          if(callBackFunction != null){
-            console.log("jsonData", jsonData.items);
-            populateItemListTile(jsonData.items);
-          } 
-        }
-      };
-	 
-      xhttp.open("GET", url, true);
-      xhttp.setRequestHeader('Access-Control-Allow-Headers', '*');
-      xhttp.setRequestHeader('Content-type', 'application/ecmascript');
-      xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
-      xhttp.send();
+     
       
     }
 
