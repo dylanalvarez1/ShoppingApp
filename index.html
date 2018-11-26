@@ -99,7 +99,7 @@
 
       //http://api.walmartlabs.com/v1/search?query=shirt&format=json&apiKey=your API_key
 
-      var dc = new DataController(false); //true ==> use local API
+      makeRequest(populateItemListTile);
 
       /**Define what to do with the album titles list **/
       var populateItemListTile = function (items){
@@ -226,6 +226,8 @@
         if (this.readyState == 4 && this.status == 200) {
             //console.log("txt",this.responseText);
             var jsonData = JSON.parse(this.responseText);
+            console.log(jsonData);
+            console.log(jsonData.items);
             if(callBackFunction != null){
               console.log("jsonData", jsonData.items);
               callBackFunction(jsonData.items);
