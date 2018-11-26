@@ -31,6 +31,7 @@
     var userEmail = null;
     addedSignoutListener = true;
     addedSigninListener = true;
+    var hasSearched = false;
     function load_js()
    {
 
@@ -39,6 +40,24 @@
       script.src= 'js/init1.js';
       head.appendChild(script);
    }
+
+   function jsonp(url) {
+      return new Promise(function(resolve, reject) {
+          let script = document.createElement('script')
+          const name = "_jsonp_" + Math.round(100000 * Math.random());
+          //url formatting
+          if (url.match(/\?/)) url += "&callback="+name
+          else url += "?callback="+name
+          script.src = url;
+
+          window[name] = function(data) {
+              resolve(data);
+              document.body.removeChild(script);
+              delete window[name];
+          }
+          document.body.appendChild(script);
+      });
+    }
 
     function load_js_login() {
         var head= document.getElementsByTagName('head')[0];
@@ -87,6 +106,7 @@
     }
 
     function walmartPopulate(form) {
+      hasSearched = true;
       console.log("In walmart populate");
       console.log(form.childNodes[1].value);
 
@@ -95,11 +115,7 @@
       let urlBase = "https://api.walmartlabs.com/v1/search?query=";
 
       let url = urlBase + form.childNodes[1].value + "&format=json&apiKey=" + apiKey;
-      console.log("url", url);
-
-      //http://api.walmartlabs.com/v1/search?query=shirt&format=json&apiKey=your API_key
-
-     
+      console.log("url", url); 
 
       /**Define what to do with the album titles list **/
       var populateItemListTile = function (items){
@@ -122,7 +138,7 @@
             /**Define the item "tile" **/	
             //console.log("debug:", item.name);	
             //console.log("debug item:", item);
-            var tileNode = createTileNode(item.shortDescription, "item", item);
+            var tileNode = createTileNode(item.name, "item", item);
 
             itemDiv.appendChild(tileNode);
           });
@@ -165,13 +181,15 @@
       }
 
       var createTileNode = function(title, classType, item){
-        let itemClass = item.name.split(" ");
         var tileNode = document.createElement("div");
         var titleNode = document.createTextNode(title);
         var itemNode = document.createElement("div");
-        itemNode.className = itemClass[1]+"Icon";
+        var imageNode = document.createElement("IMG");
+        imageNode.src = item.thumbnailImage;
         tileNode.className = classType+"TileDiv";
+        imageNode.className = "genericIcon";
         tileNode.appendChild(itemNode);
+        tileNode.appendChild(imageNode);
         tileNode.appendChild(titleNode);
         return tileNode;
       }
@@ -193,14 +211,14 @@
             //use tile view
             console.log("Tile fill!");
             //reloadPage();
-            makeRequest(populateItemListTile);
+            //makeRequest(populateItemListTile);
 
           }
           else { // use table view
             //dc.isLocalApi = false;
             console.log("Table fill!");
             //reloadPage();
-            makeRequest(populateItemListTable);
+            //makeRequest(populateItemListTable);
           }
           
           
@@ -219,30 +237,13 @@
         
       }
 
-      var makeRequest = function(url, callBackFunction) {
-        console.log("Making request");
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            //console.log("txt",this.responseText);
-            var jsonData = JSON.parse(this.responseText);
-            console.log(jsonData);
-            console.log(jsonData.items);
-            if(callBackFunction != null){
-              console.log("jsonData", jsonData.items);
-              callBackFunction(jsonData.items);
-            } 
-          }
-        };
-    
-        xhttp.open("GET", url, true);
-        xhttp.setRequestHeader('Access-Control-Allow-Headers', '*');
-        xhttp.setRequestHeader('Content-type', 'application/ecmascript');
-        xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
-        xhttp.send();
-      }
+      var data = jsonp(url);
+      data.then((res) => {
+        console.log("res", res);
+        populateItemListTile(res.items);
+      });
 
-       makeRequest(url, populateItemListTile);
+      
 
      
       

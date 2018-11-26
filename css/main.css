@@ -75,17 +75,24 @@ input[type=text]:focus {
 	margin: 3px;
 	display: inline-block;
 	text-align: center;
+	max-width: 25%;
+	max-height: 25%;
 }
 
 .itemTileDiv{
 	width: 25%;
 	height: 25%;
+	max-width: 25%;
+	max-height: 25%;
+	font-size: 10px;
 }
 
 .itemTileDiv2{
 	width: 10%;
 	height: 10%;
 	font-size: 0.8em;
+	max-width: 10%;
+	max-height: 10%;
 }
 
 
@@ -94,7 +101,7 @@ input[type=text]:focus {
 	
 }
 
-.itemIcon, .bootIcon, .sweaterIcon, .shirtIcon, .pantsIcon, .sandalIcon, .shortsIcon {
+.itemIcon, .bootIcon, .sweaterIcon, .shirtIcon, .pantsIcon, .sandalIcon, .shortsIcon, .genericIcon{
 	border-radius: 12px;
 	width: 150px;
 	height: 150px;
