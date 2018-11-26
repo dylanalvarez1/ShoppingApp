@@ -103,7 +103,7 @@
             //Update the purchase history, so first get all items
             //Then for each item, get Users who bought product, and if they bought it, add item to table
             var purchasedItems;
-            let urlGetItems = 'http://localhost:8081/store-2.0.3.RELEASE/store/items/';
+            let urlGetItems = 'https://store-webapp-dylan.herokuapp.com/store/items/';
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
@@ -112,7 +112,7 @@
                    // console.log("purchasedItems:", purchasedItems);
                     purchasedItems.forEach(item => {
                         //console.log("item:", item);
-                        let tempUrl = 'http://localhost:8081/store-2.0.3.RELEASE/store/carts/products?productId=' + item.id;
+                        let tempUrl = 'https://store-webapp-dylan.herokuapp.com/store/carts/products?productId=' + item.id;
                         //console.log("tempUrl:", tempUrl);
                         let xhttp4 = new XMLHttpRequest();
                         xhttp4.onreadystatechange = function() {
@@ -204,7 +204,7 @@
 
         let once = true;
         if(once) {
-            let urlPost = 'http://localhost:8081/store-2.0.3.RELEASE/' +"store/customers?" + "fname=" + userObject.fname + "&lname=" + userObject.lname + "&username=" + userObject.username + "&email=" + userObject.email;
+            let urlPost = 'https://store-webapp-dylan.herokuapp.com/' +"store/customers?" + "fname=" + userObject.fname + "&lname=" + userObject.lname + "&username=" + userObject.username + "&email=" + userObject.email;
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && (this.status == 201) || (this.status == 200)) {
@@ -309,7 +309,7 @@
         userObject.email = y;
       
         //Update user fields
-        let urlPut = 'http://localhost:8081/store-2.0.3.RELEASE/' +"store/customers?" + "fname=" 
+        let urlPut = 'https://store-webapp-dylan.herokuapp.com/' +"store/customers?" + "fname=" 
         + userObject.fname + "&lname=" 
         + userObject.lname + "&username=" + user + "&email=" + userObject.email;
 

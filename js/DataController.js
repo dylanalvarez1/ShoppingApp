@@ -7,7 +7,7 @@ function DataController(isLocal){
 }
 DataController.prototype.setBaseUrl = function(){
 	if(this.isLocalApi)
-		this.baseUrl = 'http://localhost:8081/store-2.0.3.RELEASE/';
+		this.baseUrl = 'https://store-webapp-dylan.herokuapp.com/';
 	else
 		this.baseUrl = "http://api.walmartlabs.com/v1/";
 
@@ -15,13 +15,13 @@ DataController.prototype.setBaseUrl = function(){
 
 
 DataController.prototype.getItemTitles = function(callBackFunction){
-	  var url = 'http://localhost:8081/store-2.0.3.RELEASE/' +"store/items/";
+	  var url = 'https://store-webapp-dylan.herokuapp.com/' +"store/items/";
 	  this.getData(url, callBackFunction);
 	  
 }
 
 DataController.prototype.getAllItems = function(callBackFunction){
-	  var url = 'http://localhost:8081/store-2.0.3.RELEASE/';
+	  var url = 'https://store-webapp-dylan.herokuapp.com/';
 		if(this.isLocalApi)
 			url += "store/items";
 		else //http://ws.audioscrobbler.com/2.0/?method=tag.gettopalbums&tag=disco&api_key=####&format=json
@@ -32,14 +32,14 @@ DataController.prototype.getAllItems = function(callBackFunction){
 }
 
 DataController.prototype.getItemById = function(id, callBackFunction){
-	  var url = 'http://localhost:8081/store-2.0.3.RELEASE/' +"store/items/"+id;
+	  var url = 'https://store-webapp-dylan.herokuapp.com/' +"store/items/"+id;
 	  console.log("url:", url);
 	  this.getData(url, callBackFunction);
 
 }
 
 DataController.prototype.getUserByUsername = function(username, callBackFunction){
-	var url = 'http://localhost:8081/store-2.0.3.RELEASE/' +"store/customers/"+username;
+	var url = 'https://store-webapp-dylan.herokuapp.com/' +"store/customers/"+username;
 	console.log("url:", url);
 	this.getData(url, callBackFunction);
 
@@ -48,7 +48,7 @@ DataController.prototype.getUserByUsername = function(username, callBackFunction
 DataController.prototype.createUser = function(user){
 	//?fname=Jane&lname=Doe&username=jdoe&email=jdoe@gmail.com
 	console.log("creating user");
-	var url = 'http://localhost:8081/store-2.0.3.RELEASE/' +"store/customers?" + "fname=" + user.fname + "&lname=" + user.lname + "&username=" + user.username + "&email=" + user.email;
+	var url = 'https://store-webapp-dylan.herokuapp.com/' +"store/customers?" + "fname=" + user.fname + "&lname=" + user.lname + "&username=" + user.username + "&email=" + user.email;
 	this.postData(url);
 
 }

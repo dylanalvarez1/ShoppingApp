@@ -115,7 +115,7 @@
 				itemDiv.innerHTML = "Please sign in if you want to add items to your cart to purchase them later"
 			}
 			else {
-				let urlPut =  'http://localhost:8081/store-2.0.3.RELEASE/' +"store/carts?" + "productId=" + item.id + "&username=" + user;
+				let urlPut =  'https://store-webapp-dylan.herokuapp.com/' +"store/carts?" + "productId=" + item.id + "&username=" + user;
 				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && (this.status == 200 || this.status == 201)) {
