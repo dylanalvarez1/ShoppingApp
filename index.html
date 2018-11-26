@@ -99,7 +99,7 @@
 
       //http://api.walmartlabs.com/v1/search?query=shirt&format=json&apiKey=your API_key
 
-      makeRequest(populateItemListTile);
+     
 
       /**Define what to do with the album titles list **/
       var populateItemListTile = function (items){
@@ -241,6 +241,8 @@
         xhttp.setRequestHeader('Access-Control-Allow-Origin', '*');
         xhttp.send();
       }
+
+       makeRequest(populateItemListTile);
 
      
       
