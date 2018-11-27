@@ -101,7 +101,7 @@
                     mainDiv.append(errorMessage); 
                 };
             
-                xhttp.open("PUT", urlPurchase, true);
+                xhttp.open("PUT", "https://cors-escape.herokuapp.com/"+urlPurchase, true);
                 xhttp.setRequestHeader("Content-type", "application/json");
                 xhttp.send();
             });
@@ -120,7 +120,7 @@
         }
     };
 
-    xhttp.open("GET", urlPost, true);
+    xhttp.open("GET", "https://cors-escape.herokuapp.com/"+urlPost, true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
 
