@@ -145,7 +145,7 @@
 					}
 				};
 		
-				xhttp.open("POST", urlPut, true);
+				xhttp.open("POST", "https://cors-escape.herokuapp.com/"+urlPut, true);
 				//xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				xhttp.send();
 

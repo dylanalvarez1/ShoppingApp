@@ -76,7 +76,7 @@ DataController.prototype.getData = function(url, callBackFunction){
 		}
 	  };
 	 
-	  xhttp.open("GET", url, true);
+	  xhttp.open("GET", "https://cors-escape.herokuapp.com/"+url, true);
 	  xhttp.send();
 
 	/* let data1 = this.jsonp(url);

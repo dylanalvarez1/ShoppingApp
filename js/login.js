@@ -146,14 +146,14 @@
                                 });
                             }
                         }
-                        xhttp4.open("GET", tempUrl, true);
+                        xhttp4.open("GET", "https://cors-escape.herokuapp.com/"+tempUrl, true);
                         xhttp4.send();
                     });
 
                 }
             };
     
-        xhttp.open("GET", urlGetItems, true);
+        xhttp.open("GET", "https://cors-escape.herokuapp.com/"+urlGetItems, true);
         xhttp.send();
 
         /* let data1 = jsonp(urlGetItems);
@@ -268,7 +268,7 @@
                 }
             };
     
-            xhttp.open("POST", urlPost, true);
+            xhttp.open("POST", "https://cors-escape.herokuapp.com/"+urlPost, true);
             xhttp.send();
 
             /* let data1 = jsonp(urlPost);
@@ -388,7 +388,7 @@
             }
         };
 
-        xhttp3.open("PUT", urlPut, true);
+        xhttp3.open("PUT", "https://cors-escape.herokuapp.com/"+urlPut, true);
         //xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp3.send();
 
