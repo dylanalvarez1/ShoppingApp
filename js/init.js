@@ -1,6 +1,24 @@
 (function() {
 	var dc = new DataController(true); //true ==> use local API
 
+	var jsonp = function jsonp(url) {
+		return new Promise(function(resolve, reject) {
+			let script = document.createElement('script')
+			const name = "_jsonp_" + Math.round(100000 * Math.random());
+			//url formatting
+			if (url.match(/\?/)) url += "&callback="+name
+			else url += "?callback="+name
+			script.src = url;
+	
+			window[name] = function(data) {
+				resolve(data);
+				document.body.removeChild(script);
+				delete window[name];
+			}
+			document.body.appendChild(script);
+		});
+	}
+
 	/**Define what to do with the album titles list **/
 	var populateItemListTile = function (items){
 		//console.log("items", items);
@@ -116,7 +134,7 @@
 			}
 			else {
 				let urlPut =  'https://store-webapp-dylan.herokuapp.com/' +"store/carts?" + "productId=" + item.id + "&username=" + user;
-				var xhttp = new XMLHttpRequest();
+				/* var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && (this.status == 200 || this.status == 201)) {
 						//send an alert, clear the form
@@ -126,9 +144,16 @@
 					}
 				};
 		
-			xhttp.open("POST", urlPut, true);
-			//xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhttp.send();
+				xhttp.open("POST", urlPut, true);
+				//xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhttp.send(); */
+
+				let data1 = jsonp(urlPut);
+				data1.then((res) => {
+				console.log("res", res);
+				alert("User " + user + " added " + item.name + " to their cart!");
+				});
+
 			}
 
 
@@ -203,6 +228,8 @@
       script.src= 'js/init.js';
       head.appendChild(script);
    }
+
+   
 
    //reloadPage();
 	

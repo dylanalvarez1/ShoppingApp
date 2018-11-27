@@ -1,3 +1,21 @@
+function jsonp(url) {
+	return new Promise(function(resolve, reject) {
+		let script = document.createElement('script')
+		const name = "_jsonp_" + Math.round(100000 * Math.random());
+		//url formatting
+		if (url.match(/\?/)) url += "&callback="+name
+		else url += "?callback="+name
+		script.src = url;
+
+		window[name] = function(data) {
+			resolve(data);
+			document.body.removeChild(script);
+			delete window[name];
+		}
+		document.body.appendChild(script);
+	});
+}
+
 /**Create a JavaScript object with a constructor, properties and functions **/
 function DataController(isLocal){
 	this.isLocalApi = isLocal;
@@ -45,16 +63,8 @@ DataController.prototype.getUserByUsername = function(username, callBackFunction
 
 }
 
-DataController.prototype.createUser = function(user){
-	//?fname=Jane&lname=Doe&username=jdoe&email=jdoe@gmail.com
-	console.log("creating user");
-	var url = 'https://store-webapp-dylan.herokuapp.com/' +"store/customers?" + "fname=" + user.fname + "&lname=" + user.lname + "&username=" + user.username + "&email=" + user.email;
-	this.postData(url);
-
-}
-
 DataController.prototype.getData = function(url, callBackFunction){
-	  var xhttp = new XMLHttpRequest();
+	  /* var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			//console.log("txt",this.responseText);
@@ -66,12 +76,14 @@ DataController.prototype.getData = function(url, callBackFunction){
 	  };
 	 
 	  xhttp.open("GET", url, true);
-	  xhttp.send();
-}
+	  xhttp.send(); */
 
-DataController.prototype.postData = function(url){
-	console.log("posting data");
-	
+	let data1 = jsonp(url);
+	data1.then((res) => {
+		//console.log("res", res);
+		callBackFunction(res);
+	});
+
 }
 
 

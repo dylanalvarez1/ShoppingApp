@@ -7,6 +7,25 @@
         else {
             notSignedIn();
         }
+
+
+    function jsonp(url) {
+        return new Promise(function(resolve, reject) {
+            let script = document.createElement('script')
+            const name = "_jsonp_" + Math.round(100000 * Math.random());
+            //url formatting
+            if (url.match(/\?/)) url += "&callback="+name
+            else url += "?callback="+name
+            script.src = url;
+    
+            window[name] = function(data) {
+                resolve(data);
+                document.body.removeChild(script);
+                delete window[name];
+            }
+            document.body.appendChild(script);
+        });
+    }
    
      function notSignedIn() {
         //If the user is not signed in
@@ -90,21 +109,12 @@
                 console.log("clicked signoutButton");
                 signout();
             }); 
-
-            /* foreach(product p in getAllProducts())
-            {
-                foreach(user in getUsersWhoBoughtProduct(p))
-                { 
-                    if(user == cookie.user) { // display on view}
-                } 
-            }  */
-
             
             //Update the purchase history, so first get all items
             //Then for each item, get Users who bought product, and if they bought it, add item to table
             var purchasedItems;
             let urlGetItems = 'https://store-webapp-dylan.herokuapp.com/store/items/';
-            var xhttp = new XMLHttpRequest();
+            /* var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     let purchaseTable = document.getElementById('purchaseTable');
@@ -144,8 +154,39 @@
             };
     
         xhttp.open("GET", urlGetItems, true);
-        xhttp.send();
+        xhttp.send(); */
+
+        let data1 = jsonp(urlGetItems);
+        data1.then((res) => {
+            let purchaseTable = document.getElementById('purchaseTable');
+            purchasedItems = JSON.parse(res);
+            purchasedItems.forEach(item => {
+                //console.log("item:", item);
+                let tempUrl = 'https://store-webapp-dylan.herokuapp.com/store/carts/products?productId=' + item.id;
+                let data2 = jsonp(tempUrl);
+                data2.then((res2) => { 
+                    let response = JSON.parse(res2);
+                    let i=1;
+                    response.forEach(userWhoBoughtItem => {
+
+                        //Add item to the list
+                        if(userWhoBoughtItem.username == user) {
+                            var row = table.insertRow(i++);
+                            var name = row.insertCell(0);
+                            var description = row.insertCell(1);
+                            var price = row.insertCell(2);
+                            name.innerHTML = item.name;
+                            description.innerHTML = item.shortDescription;
+                            price.innerHTML = item.salePrice;
+
+                        }
+                    });
+                });
+            });
     
+
+
+        });
     
         } 
      }
@@ -205,7 +246,7 @@
         let once = true;
         if(once) {
             let urlPost = 'https://store-webapp-dylan.herokuapp.com/' +"store/customers?" + "fname=" + userObject.fname + "&lname=" + userObject.lname + "&username=" + userObject.username + "&email=" + userObject.email;
-            var xhttp = new XMLHttpRequest();
+            /* var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && (this.status == 201) || (this.status == 200)) {
                     once = false;
@@ -227,8 +268,26 @@
                 }
             };
     
-        xhttp.open("POST", urlPost, true);
-        xhttp.send();
+            xhttp.open("POST", urlPost, true);
+            xhttp.send(); */
+
+            let data1 = jsonp(urlPost);
+            data1.then((res) => {
+                once = false;
+                user = userObject.username;
+                userFname = userObject.fname;
+                userLname = userObject.lname;
+                userEmail = userObject.email;
+
+                //console.log("user:", user);
+                signedIn();
+                alert("Congrats " + user + ", you have successfully created an account!");
+                
+                document.getElementById("emailField1").value = "";
+                document.getElementById("fnameField1").value = "";
+                document.getElementById("lnameField1").value = "";
+                document.getElementById("userField1").value = "";
+            });
         }
        
     
@@ -313,7 +372,7 @@
         + userObject.fname + "&lname=" 
         + userObject.lname + "&username=" + user + "&email=" + userObject.email;
 
-        var xhttp3 = new XMLHttpRequest();
+       /*  var xhttp3 = new XMLHttpRequest();
         xhttp3.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 //send an alert, clear the form
@@ -329,9 +388,22 @@
             }
         };
 
-    xhttp3.open("PUT", urlPut, true);
-    //xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp3.send();
+        xhttp3.open("PUT", urlPut, true);
+        //xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp3.send(); */
+
+        let data1 = jsonp(urlPut);
+        data1.then((res) => {
+            //send an alert, clear the form
+            alert("User " + user + " updated successfully!");
+            document.getElementById("updateEmail").value = "";
+            document.getElementById("updateFname").value = "";
+            document.getElementById("updateLname").value = "";
+
+            document.getElementById("emailProfile").innerHTML = "Email: " + userObject.email;
+            document.getElementById("fnameProfile").innerHTML = "First Name: " + userObject.fname;
+            document.getElementById("lnameProfile").innerHTML = "Last Name: " + userObject.lname;
+        });
         
     } 
 
