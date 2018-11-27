@@ -114,7 +114,7 @@
             //Then for each item, get Users who bought product, and if they bought it, add item to table
             var purchasedItems;
             let urlGetItems = 'https://store-webapp-dylan.herokuapp.com/store/items/';
-            /* var xhttp = new XMLHttpRequest();
+            var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     let purchaseTable = document.getElementById('purchaseTable');
@@ -154,9 +154,9 @@
             };
     
         xhttp.open("GET", urlGetItems, true);
-        xhttp.send(); */
+        xhttp.send();
 
-        let data1 = jsonp(urlGetItems);
+        /* let data1 = jsonp(urlGetItems);
         data1.then((res) => {
             let purchaseTable = document.getElementById('purchaseTable');
             purchasedItems = JSON.parse(res);
@@ -186,7 +186,7 @@
     
 
 
-        });
+        }); */
     
         } 
      }
@@ -246,7 +246,7 @@
         let once = true;
         if(once) {
             let urlPost = 'https://store-webapp-dylan.herokuapp.com/' +"store/customers?" + "fname=" + userObject.fname + "&lname=" + userObject.lname + "&username=" + userObject.username + "&email=" + userObject.email;
-            /* var xhttp = new XMLHttpRequest();
+            var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && (this.status == 201) || (this.status == 200)) {
                     once = false;
@@ -269,9 +269,9 @@
             };
     
             xhttp.open("POST", urlPost, true);
-            xhttp.send(); */
+            xhttp.send();
 
-            let data1 = jsonp(urlPost);
+            /* let data1 = jsonp(urlPost);
             data1.then((res) => {
                 once = false;
                 user = userObject.username;
@@ -287,7 +287,7 @@
                 document.getElementById("fnameField1").value = "";
                 document.getElementById("lnameField1").value = "";
                 document.getElementById("userField1").value = "";
-            });
+            }); */
         }
        
     
@@ -372,7 +372,7 @@
         + userObject.fname + "&lname=" 
         + userObject.lname + "&username=" + user + "&email=" + userObject.email;
 
-       /*  var xhttp3 = new XMLHttpRequest();
+        var xhttp3 = new XMLHttpRequest();
         xhttp3.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 //send an alert, clear the form
@@ -390,9 +390,9 @@
 
         xhttp3.open("PUT", urlPut, true);
         //xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp3.send(); */
+        xhttp3.send();
 
-        let data1 = jsonp(urlPut);
+       /*  let data1 = jsonp(urlPut);
         data1.then((res) => {
             //send an alert, clear the form
             alert("User " + user + " updated successfully!");
@@ -403,7 +403,7 @@
             document.getElementById("emailProfile").innerHTML = "Email: " + userObject.email;
             document.getElementById("fnameProfile").innerHTML = "First Name: " + userObject.fname;
             document.getElementById("lnameProfile").innerHTML = "Last Name: " + userObject.lname;
-        });
+        }); */
         
     } 
 

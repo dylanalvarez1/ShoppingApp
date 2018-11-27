@@ -45,7 +45,7 @@
     let urlPost = "https://store-webapp-dylan.herokuapp.com/store/carts?username=" + user;
     
     //console.log(urlPost);
-   /*  var xhttp = new XMLHttpRequest();
+    var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             let json = JSON.parse(xhttp.responseText);
@@ -122,9 +122,9 @@
 
     xhttp.open("GET", urlPost, true);
     xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(); */
+    xhttp.send();
 
-    let data1 = jsonp(urlPost);
+    /* let data1 = jsonp(urlPost);
 	data1.then((res) => {
         let json = JSON.parse(res);
         let items = JSON.parse(res).items;
@@ -184,7 +184,7 @@
         mainDiv.appendChild(table);
 
 		
-	});
+	}); */
    }
 
    function updatePrice(price) {

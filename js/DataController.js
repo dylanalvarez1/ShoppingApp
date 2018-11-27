@@ -65,7 +65,7 @@ DataController.prototype.getUserByUsername = function(username, callBackFunction
 }
 
 DataController.prototype.getData = function(url, callBackFunction){
-	  /* var xhttp = new XMLHttpRequest();
+	  var xhttp = new XMLHttpRequest();
 	  xhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			//console.log("txt",this.responseText);
@@ -77,13 +77,13 @@ DataController.prototype.getData = function(url, callBackFunction){
 	  };
 	 
 	  xhttp.open("GET", url, true);
-	  xhttp.send(); */
+	  xhttp.send();
 
-	let data1 = this.jsonp(url);
+	/* let data1 = this.jsonp(url);
 	data1.then((res) => {
 		//console.log("res", res);
 		callBackFunction(res);
-	});
+	}); */
 
 }
 

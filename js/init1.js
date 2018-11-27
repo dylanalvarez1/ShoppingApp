@@ -135,7 +135,7 @@
 			}
 			else {
 				let urlPut =  'https://store-webapp-dylan.herokuapp.com/' +"store/carts?" + "productId=" + item.id + "&username=" + user;
-				/* var xhttp = new XMLHttpRequest();
+				var xhttp = new XMLHttpRequest();
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && (this.status == 200 || this.status == 201)) {
 						//send an alert, clear the form
@@ -147,13 +147,13 @@
 		
 				xhttp.open("POST", urlPut, true);
 				//xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-				xhttp.send(); */
+				xhttp.send();
 
-				let data1 = jsonp(urlPut);
+				/* let data1 = jsonp(urlPut);
 				data1.then((res) => {
 				console.log("res", res);
 				alert("User " + user + " added " + item.name + " to their cart!");
-				});
+				}); */
 			}
 
 
